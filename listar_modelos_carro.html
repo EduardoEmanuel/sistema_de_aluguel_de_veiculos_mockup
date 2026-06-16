@@ -68,7 +68,7 @@
             </tr>
           </thead>
           <tbody id="tabelaCarros">
-            </tbody>
+          </tbody>
         </table>
       </div>
     </main>
@@ -82,10 +82,14 @@
         const tabela = document.getElementById('tabelaCarros');
         let listaCarros = JSON.parse(localStorage.getItem('carros')) || [];
 
+        // Adicionados os novos veículos da imagem image_5b659f.jpg com seus preços promocionais correspondentes
         if (listaCarros.length === 0) {
           listaCarros = [
             { marca: "Toyota", modelo: "Corolla", ano: "2026", placa: "BRA2E19", preco: "220.00" },
-            { marca: "Chevrolet", modelo: "Onix", ano: "2025", placa: "RND4J12", preco: "140.00" }
+            { marca: "Chevrolet", modelo: "Onix", ano: "2025", placa: "RND4J12", preco: "140.00" },
+            { marca: "Audi", modelo: "Q3 Sportback", ano: "2026", placa: "AUQ3S25", preco: "285.00" },
+            { marca: "Jeep", modelo: "Compass Turbo", ano: "2026", placa: "JCP1T15", preco: "221.00" },
+            { marca: "Honda", modelo: "Civic Touring", ano: "2025", placa: "HCV1T10", preco: "216.00" }
           ];
           localStorage.setItem('carros', JSON.stringify(listaCarros));
         }
@@ -97,7 +101,7 @@
             </td>
             <td>${carro.ano}</td>
             <td><span class="badge bg-secondary">${carro.placa.toUpperCase()}</span></td>
-            <td class="fw-bold text-success">R$ ${carro.preco}</td>
+            <td class="fw-bold text-success">R$ ${parseFloat(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
             <td><span class="badge bg-success shadow-sm">Disponível</span></td>
             <td class="text-center pe-3">
               <button onclick="deletarCarro(${index})" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-semibold">
@@ -109,11 +113,11 @@
       }
 
       function deletarCarro(index) {
-        if (confirm("Tem certeza de que deseja remover este veículo da frota ativa?")) {
+        if (confirm("Tem certeza de que deseja remover este veículo da frota activa?")) {
           let listaCarros = JSON.parse(localStorage.getItem('carros')) || [];
           listaCarros.splice(index, 1);
           localStorage.setItem('carros', JSON.stringify(listaCarros));
-          renderizarTabela(); // Atualiza a tela imediatamente
+          renderizarTabela(); 
         }
       }
     </script>
