@@ -95,17 +95,12 @@
   color: #94a3b8 !important;
 }
 
-/* Importando a Fonte Moderna: Plus Jakarta Sans */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
-/* Aplicando a nova fonte para todo o projeto */
 body, html {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* ==========================================================================
-   MÁGICA DA LOGO: Transforma PNG Preto em Teal Moderno (#14b8a6)
-   ========================================================================== */
 .logo-premium {
   width: 32px;
   height: 32px;

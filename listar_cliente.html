@@ -10,16 +10,41 @@
     <link href="./assets/style/style.css" rel="stylesheet" />
   </head>
   <body>
-    <!-- Navbar padrão -->
-    <nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md site-header sticky-top border-bottom" data-bs-theme="dark">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <img src="./assets/brand/rent-a-car-icon-14789.png" alt="Livre'Alugues Logo" class="logo-premium">
           <span class="fw-bold text-white">Livre'Alugues</span>
         </a>
-        <div class="navbar-nav gap-3">
-          <a class="nav-link" href="index.html">Inicial</a>
-          <a class="nav-link active" href="listar_cliente.html">Clientes</a>
-          <a class="nav-link" href="listar_modelos_carro.html">Veículos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">Livre'Alugues</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav flex-grow-1 justify-content-end gap-3">
+              <li class="nav-item"><a class="nav-link" href="index.html">Página Inicial</a></li>
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clientes</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-menu-item dropdown-item" href="cadastrar_cliente.html">Cadastrar Cliente</a></li>
+                  <li><a class="dropdown-menu-item dropdown-item active" href="listar_cliente.html">Listagem de Clientes</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Veículos</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-menu-item dropdown-item" href="cadastrar_modelos_carro.html">Cadastrar Veículo</a></li>
+                  <li><a class="dropdown-menu-item dropdown-item" href="listar_modelos_carro.html">Listagem de Veículos</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -38,22 +63,25 @@
               <th scope="col">CPF</th>
               <th scope="col">Telefone</th>
               <th scope="col">E-mail</th>
-              <th scope="col" class="pe-3">Endereço</th>
+              <th scope="col">Endereço</th>
+              <th scope="col" class="text-center pe-3">Ações</th>
             </tr>
           </thead>
           <tbody id="tabelaClientes">
-            <!-- Inserido dinamicamente via JS -->
-          </tbody>
+            </tbody>
         </table>
       </div>
     </main>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        renderizarTabela();
+      });
+
+      function renderizarTabela() {
         const tabela = document.getElementById('tabelaClientes');
         let listaClientes = JSON.parse(localStorage.getItem('clientes')) || [];
 
-        // Dados mockados iniciais caso o localStorage esteja vazio
         if (listaClientes.length === 0) {
           listaClientes = [
             { nome: "Carlos Eduardo Ramos", cpf: "012.345.678-90", telefone: "(69) 98111-2233", email: "carlos.ramos@email.com", endereco: "Av. Jorge Teixeira, 1200" },
@@ -62,16 +90,30 @@
           localStorage.setItem('clientes', JSON.stringify(listaClientes));
         }
 
-        tabela.innerHTML = listaClientes.map(cliente => `
+        tabela.innerHTML = listaClientes.map((cliente, index) => `
           <tr>
             <td class="fw-bold ps-3">${cliente.nome}</td>
             <td>${cliente.cpf}</td>
             <td>${cliente.telefone}</td>
             <td>${cliente.email}</td>
-            <td class="pe-3 text-muted">${cliente.endereco}</td>
+            <td class="text-muted">${cliente.endereco}</td>
+            <td class="text-center pe-3">
+              <button onclick="deletarCliente(${index})" class="btn btn-sm btn-outline-danger px-3 rounded-pill fw-semibold">
+                Excluir
+              </button>
+            </td>
           </tr>
         `).join('');
-      });
+      }
+
+      function deletarCliente(index) {
+        if (confirm("Tem certeza de que deseja excluir este cliente permanentemente?")) {
+          let listaClientes = JSON.parse(localStorage.getItem('clientes')) || [];
+          listaClientes.splice(index, 1);
+          localStorage.setItem('clientes', JSON.stringify(listaClientes));
+          renderizarTabela(); // Atualiza a tela imediatamente
+        }
+      }
     </script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
   </body>
