@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Livre'Alugues - Listagem de Veículos</title>
+    <script src="./assets/js/color-modes.js"></script>
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./assets/style/product.css" rel="stylesheet" />
+    <link href="./assets/style/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar padrão -->
+    <nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <span class="fw-bold text-white">Livre'Alugues</span>
+        </a>
+        <div class="navbar-nav gap-3">
+          <a class="nav-link" href="index.html">Inicial</a>
+          <a class="nav-link" href="listar_cliente.html">Clientes</a>
+          <a class="nav-link active" href="listar_modelos_carro.html">Veículos</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mb-4 gap-3">
+        <h2 class="fw-bold m-0" style="color: #2a5298;">Nossa Frota</h2>
+        <a href="cadastrar_modelos_carro.html" class="btn btn-glass-primary fw-bold shadow-sm">+ Adicionar Veículo</a>
+      </div>
+
+      <div class="table-responsive border rounded shadow-sm bg-body-tertiary">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col" class="ps-3">Marca / Modelo</th>
+              <th scope="col">Ano</th>
+              <th scope="col">Placa</th>
+              <th scope="col">Diária</th>
+              <th scope="col" class="pe-3">Status</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaCarros">
+            <!-- Inserido dinamicamente via JS -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const tabela = document.getElementById('tabelaCarros');
+        let listaCarros = JSON.parse(localStorage.getItem('carros')) || [];
+
+        if (listaCarros.length === 0) {
+          listaCarros = [
+            { marca: "Toyota", modelo: "Corolla", ano: "2026", placa: "BRA2E19", preco: "220.00" },
+            { marca: "Chevrolet", modelo: "Onix", ano: "2025", placa: "RND4J12", preco: "140.00" }
+          ];
+          localStorage.setItem('carros', JSON.stringify(listaCarros));
+        }
+
+        tabela.innerHTML = listaCarros.map(carro => `
+          <tr>
+            <td class="ps-3">
+              <div class="fw-bold">${carro.marca} ${carro.modelo}</div>
+            </td>
+            <td>${carro.ano}</td>
+            <td><span class="badge bg-secondary">${carro.placa.toUpperCase()}</span></td>
+            <td class="fw-bold text-success">R$ ${carro.preco}</td>
+            <td class="pe-3"><span class="badge bg-success shadow-sm">Disponível</span></td>
+          </tr>
+        `).join('');
+      });
+    </script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,3 +1,9 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  --accent-teal: #14b8a6;
+  --header-bg-glass: rgba(15, 23, 42, 0.75);
+}
+
 .container {
   max-width: 960px;
 }
@@ -7,27 +13,22 @@
   height: .75em;
 }
 
-/*
- * Custom translucent site header
- */
-
 .site-header {
-  background-color: rgba(0, 0, 0, .85);
+  background-color: var(--header-bg-glass);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
-}
-.site-header a {
-  color: #8e8e8e;
-  transition: color .15s ease-in-out;
-}
-.site-header a:hover {
-  color: #fff;
-  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/*
- * Dummy devices (replace them with your own or something else entirely!)
- */
+.site-header a {
+  color: #b4c6ef; 
+  transition: color .2s ease-in-out, transform .2s ease;
+}
+
+.site-header a:hover {
+  color: var(--accent-teal); 
+  text-decoration: none;
+}
 
 .product-device {
   position: absolute;
@@ -35,9 +36,10 @@
   bottom: -30%;
   width: 300px;
   height: 540px;
-  background-color: #333;
+  background: var(--primary-gradient);
   border-radius: 21px;
   transform: rotate(30deg);
+  box-shadow: 0 20px 40px rgba(30, 60, 114, 0.25);
 }
 
 .product-device::before {
@@ -47,8 +49,9 @@
   bottom: 10%;
   left: 10px;
   content: "";
-  background-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.08);
   border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .product-device-2 {
@@ -56,19 +59,28 @@
   right: auto;
   bottom: 0;
   left: 5%;
-  background-color: #e5e5e5;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(20, 184, 166, 0.3); /* Borda sutil em Teal */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 
+              inset 0 0 15px rgba(20, 184, 166, 0.1);
 }
 
-
-/*
- * Extra utilities
- */
 
 .flex-equal > * {
   flex: 1;
 }
+
 @media (min-width: 768px) {
   .flex-md-equal > * {
     flex: 1;
   }
+}
+
+.text-gradient-title {
+  background: linear-gradient(135deg, #1e3c72 0%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }

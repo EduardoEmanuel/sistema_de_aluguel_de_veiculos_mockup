@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Livre'Alugues - Cadastrar Veículo</title>
+    <script src="./assets/js/color-modes.js"></script>
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./assets/style/product.css" rel="stylesheet" />
+    <link href="./assets/style/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar padrão -->
+    <nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <span class="fw-bold text-white">Livre'Alugues</span>
+        </a>
+        <div class="navbar-nav gap-3">
+          <a class="nav-link" href="index.html">Inicial</a>
+          <a class="nav-link" href="listar_cliente.html">Clientes</a>
+          <a class="nav-link active" href="listar_modelos_carro.html">Veículos</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="p-4 p-md-5 bg-body-tertiary border rounded shadow-sm">
+            <h2 class="mb-4 fw-bold text-center" style="color: #2a5298;">Cadastrar Veículo</h2>
+            <form id="formCarro">
+              <div class="mb-3">
+                <label for="marca" class="form-label fw-semibold">Marca</label>
+                <input type="text" class="form-control" id="marca" placeholder="Ex: Toyota" required>
+              </div>
+              <div class="mb-3">
+                <label for="modelo" class="form-label fw-semibold">Modelo do Carro</label>
+                <input type="text" class="form-control" id="modelo" placeholder="Ex: Corolla" required>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="ano" class="form-label fw-semibold">Ano Fabricação</label>
+                  <input type="number" class="form-control" id="ano" min="2010" max="2027" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="placa" class="form-label fw-semibold">Placa</label>
+                  <input type="text" class="form-control" id="placa" placeholder="ABC1D23" required>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="preco" class="form-label fw-semibold">Valor da Diária (R$)</label>
+                <div class="input-group">
+                  <span class="input-group-text">R$</span>
+                  <input type="number" step="0.01" class="form-control" id="preco" required>
+                </div>
+              </div>
+              <button class="w-100 btn btn-gradient btn-lg fw-bold shadow-sm" type="submit">Adicionar à Frota</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById('formCarro').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const novoCarro = {
+          marca: document.getElementById('marca').value,
+          modelo: document.getElementById('modelo').value,
+          ano: document.getElementById('ano').value,
+          placa: document.getElementById('placa').value,
+          preco: parseFloat(document.getElementById('preco').value).toFixed(2)
+        };
+
+        let listaCarros = JSON.parse(localStorage.getItem('carros')) || [];
+        listaCarros.push(novoCarro);
+        
+        localStorage.setItem('carros', JSON.stringify(listaCarros));
+
+        alert('Veículo adicionado com sucesso!');
+        window.location.href = 'listar_modelos_carro.html';
+      });
+    </script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

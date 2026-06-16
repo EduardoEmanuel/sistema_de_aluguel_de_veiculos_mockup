@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Livre'Alugues - Cadastrar Cliente</title>
+    <script src="./assets/js/color-modes.js"></script>
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./assets/style/product.css" rel="stylesheet" />
+    <link href="./assets/style/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navbar (Mesma estrutura padrão) -->
+    <nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <span class="fw-bold text-white">Livre'Alugues</span>
+        </a>
+        <div class="navbar-nav gap-3">
+          <a class="nav-link" href="index.html">Inicial</a>
+          <a class="nav-link active" href="listar_cliente.html">Clientes</a>
+          <a class="nav-link" href="listar_modelos_carro.html">Veículos</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="p-4 p-md-5 bg-body-tertiary border rounded shadow-sm">
+            <h2 class="mb-4 fw-bold text-center" style="color: #2a5298;">Cadastro de Cliente</h2>
+            <form id="formCliente">
+              <div class="mb-3">
+                <label for="nome" class="form-label fw-semibold">Nome Completo</label>
+                <input type="text" class="form-control" id="nome" required>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cpf" class="form-label fw-semibold">CPF</label>
+                  <input type="text" class="form-control" id="cpf" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="telefone" class="form-label fw-semibold">Telefone</label>
+                  <input type="tel" class="form-control" id="telefone" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">E-mail</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-4">
+                <label for="endereco" class="form-label fw-semibold">Endereço Residencial</label>
+                <input type="text" class="form-control" id="endereco" required>
+              </div>
+              <button class="w-100 btn btn-gradient btn-lg fw-bold shadow-sm" type="submit">Salvar Cadastro</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById('formCliente').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const novoCliente = {
+          nome: document.getElementById('nome').value,
+          cpf: document.getElementById('cpf').value,
+          telefone: document.getElementById('telefone').value,
+          email: document.getElementById('email').value,
+          endereco: document.getElementById('endereco').value
+        };
+
+        // Pega a lista existente ou cria uma nova vazia
+        let listaClientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        listaClientes.push(novoCliente);
+        
+        // Salva de volta no localStorage
+        localStorage.setItem('clientes', JSON.stringify(listaClientes));
+
+        alert('Cliente cadastrado com sucesso!');
+        window.location.href = 'listar_cliente.html';
+      });
+    </script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
